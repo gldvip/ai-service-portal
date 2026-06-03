@@ -12,10 +12,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* 强制浅色模式，忽略系统暗色模式 */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #171717;
   }
 }
 
