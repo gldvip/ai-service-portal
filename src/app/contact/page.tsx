@@ -16,27 +16,41 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    try {
-      // 使用传统方法，兼容性最好
-      const textArea = document.createElement('textarea');
-      textArea.value = xianyuLink;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '0';
-      textArea.style.top = '0';
-      textArea.style.opacity = '0';
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('复制失败:', err);
-      // 最终fallback：显示文本让用户手动复制
-      prompt('复制失败，请手动复制以下链接：', xianyuLink);
+  const handleCopy = async () => {
+    // 方法1: 尝试 Clipboard API (HTTPS环境下可用)
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      try {
+        await navigator.clipboard.writeText(xianyuLink);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        return;
+      } catch (e) {
+        console.log('Clipboard API failed, trying fallback...');
+      }
     }
+
+    // 方法2: 使用 input + execCommand
+    try {
+      const input = document.createElement('input');
+      input.value = xianyuLink;
+      input.style.cssText = 'position:fixed;left:0;top:0;opacity:0;z-index:9999;';
+      document.body.appendChild(input);
+      input.focus();
+      input.setSelectionRange(0, input.value.length);
+      const success = document.execCommand('copy');
+      document.body.removeChild(input);
+
+      if (success) {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        return;
+      }
+    } catch (e) {
+      console.log('execCommand failed, showing prompt...');
+    }
+
+    // 方法3: 显示文本让用户手动复制
+    prompt('请长按复制以下链接，然后打开闲鱼APP：', xianyuLink);
   };
 
   const toolOptions = [
