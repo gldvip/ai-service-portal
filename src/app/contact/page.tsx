@@ -16,29 +16,26 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async () => {
+  const handleCopy = () => {
     try {
-      // 优先使用现代API
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(xianyuLink);
-      } else {
-        // fallback：使用传统方法
-        const textArea = document.createElement('textarea');
-        textArea.value = xianyuLink;
-        textArea.style.position = 'fixed';
-        textArea.style.left = '-9999px';
-        textArea.style.top = '-9999px';
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-      }
+      // 使用传统方法，兼容性最好
+      const textArea = document.createElement('textarea');
+      textArea.value = xianyuLink;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '0';
+      textArea.style.top = '0';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('复制失败:', err);
-      alert('复制失败，请长按链接手动复制');
+      // 最终fallback：显示文本让用户手动复制
+      prompt('复制失败，请手动复制以下链接：', xianyuLink);
     }
   };
 
