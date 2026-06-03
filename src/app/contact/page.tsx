@@ -17,15 +17,18 @@ export default function ContactPage() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    // 方法1: 尝试 Clipboard API (HTTPS环境下可用)
+    alert('点击成功！正在尝试复制...');
+
+    // 方法1: 尝试 Clipboard API
     if (navigator.clipboard && navigator.clipboard.writeText) {
       try {
         await navigator.clipboard.writeText(xianyuLink);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
+        alert('复制成功！');
         return;
       } catch (e) {
-        console.log('Clipboard API failed, trying fallback...');
+        console.log('Clipboard API failed:', e);
       }
     }
 
@@ -36,6 +39,7 @@ export default function ContactPage() {
       input.style.cssText = 'position:fixed;left:0;top:0;opacity:0;z-index:9999;';
       document.body.appendChild(input);
       input.focus();
+      input.select();
       input.setSelectionRange(0, input.value.length);
       const success = document.execCommand('copy');
       document.body.removeChild(input);
@@ -43,14 +47,16 @@ export default function ContactPage() {
       if (success) {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
+        alert('复制成功（方法2）！');
         return;
       }
     } catch (e) {
-      console.log('execCommand failed, showing prompt...');
+      console.log('execCommand failed:', e);
     }
 
     // 方法3: 显示文本让用户手动复制
-    prompt('请长按复制以下链接，然后打开闲鱼APP：', xianyuLink);
+    alert('自动复制失败，请手动长按复制链接');
+    prompt('请长按复制以下链接：', xianyuLink);
   };
 
   const toolOptions = [
