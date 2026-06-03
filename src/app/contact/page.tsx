@@ -106,7 +106,20 @@ export default function ContactPage() {
               <div className="text-center mb-4">
                 <div className="text-4xl mb-3">🐟</div>
                 <h3 className="font-semibold text-gray-900 text-lg mb-2">闲鱼咨询下单</h3>
-                <p className="text-sm text-gray-500">复制下方链接，打开闲鱼APP自动识别</p>
+                <p className="text-sm text-gray-500">扫描二维码或复制链接打开闲鱼APP</p>
+              </div>
+
+              {/* 闲鱼二维码 */}
+              <div className="flex justify-center mb-4">
+                <div className="bg-gray-50 p-3 rounded-lg">
+                  <Image
+                    src="/images/xianyu-qrcode.jpeg"
+                    alt="闲鱼二维码"
+                    width={180}
+                    height={180}
+                    className="mx-auto"
+                  />
+                </div>
               </div>
 
               {/* 闲鱼链接原文 */}
