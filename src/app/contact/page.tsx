@@ -116,7 +116,6 @@ export default function ContactPage() {
                     className="mx-auto"
                   />
                 </div>
-                <p className="text-xs text-gray-400 mt-3 mb-4">或在闲鱼搜索「AI工具安装服务」</p>
 
                 {/* 复制链接按钮 */}
                 <button
