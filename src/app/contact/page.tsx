@@ -3,6 +3,9 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
+const xianyuLink = `【闲鱼】https://m.tb.cn/h.Rh4YAxz?tk=1k5BgZgvvqH CZ356 「我在闲鱼发布了【AI工具快速安装配置】」
+点击链接直接打开      或在闲鱼搜索「AI工具安装服务」`;
+
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
@@ -12,6 +15,25 @@ export default function ContactPage() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(xianyuLink);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      //  fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = xianyuLink;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
 
   const toolOptions = [
     'Claude Code',
@@ -94,7 +116,34 @@ export default function ContactPage() {
                     className="mx-auto"
                   />
                 </div>
-                <p className="text-xs text-gray-400 mt-3">或在闲鱼搜索「AI工具安装服务」</p>
+                <p className="text-xs text-gray-400 mt-3 mb-4">或在闲鱼搜索「AI工具安装服务」</p>
+
+                {/* 复制链接按钮 */}
+                <button
+                  onClick={handleCopy}
+                  className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all ${
+                    copied
+                      ? 'bg-green-500 text-white'
+                      : 'bg-orange-500 text-white hover:bg-orange-600'
+                  }`}
+                >
+                  {copied ? (
+                    <>
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      已复制！
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                      </svg>
+                      复制闲鱼链接
+                    </>
+                  )}
+                </button>
+                <p className="text-xs text-gray-400 mt-2">复制后打开闲鱼APP自动识别</p>
               </div>
             </div>
 
