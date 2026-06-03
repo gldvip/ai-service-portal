@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-const xianyuLink = `【闲鱼】https://m.tb.cn/h.Rh4YAxz?tk=1k5BgZgvvqH CZ356 「我在闲鱼发布了【AI工具快速安装配置】」
-点击链接直接打开      或在闲鱼搜索「AI工具安装服务」`;
+const xianyuLink = '【闲鱼】https://m.tb.cn/h.Rh4YAxz?tk=1k5BgZgvvqH CZ356 「我在闲鱼发布了【AI工具快速安装配置】」\n点击链接直接打开';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -19,19 +18,27 @@ export default function ContactPage() {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(xianyuLink);
+      // 优先使用现代API
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(xianyuLink);
+      } else {
+        // fallback：使用传统方法
+        const textArea = document.createElement('textarea');
+        textArea.value = xianyuLink;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        textArea.style.top = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      }
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      //  fallback for older browsers
-      const textArea = document.createElement('textarea');
-      textArea.value = xianyuLink;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      console.error('复制失败:', err);
+      alert('复制失败，请长按链接手动复制');
     }
   };
 
