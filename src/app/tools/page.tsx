@@ -1,4 +1,16 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'AI工具列表 - Claude Code/Codex/OpenClaw安装服务',
+  description: '支持Claude Code、Codex、OpenClaw(龙虾)等主流AI编程工具的安装与配置服务，限时特惠¥19.9',
+  keywords: ['Claude Code', 'Codex', 'OpenClaw', '龙虾AI', 'AI编程工具', '代码生成'],
+  openGraph: {
+    title: 'AI工具列表 - Claude Code/Codex/OpenClaw安装服务',
+    description: '支持Claude Code、Codex、OpenClaw(龙虾)等主流AI编程工具的安装与配置服务',
+    url: 'https://ai.cccode.com.cn/tools',
+  },
+};
 
 const tools = [
   {

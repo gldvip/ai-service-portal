@@ -1,4 +1,16 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '服务定价 - AI工具安装限时特惠¥19.9 | 截止6月底',
+  description: 'AI工具安装服务限时特惠，Claude Code、Codex、OpenClaw仅需¥19.9/个，全套套餐¥49.9，截止6月底',
+  keywords: ['AI工具价格', 'Claude Code价格', 'Codex价格', 'AI安装服务', '限时优惠'],
+  openGraph: {
+    title: '服务定价 - AI工具安装限时特惠¥19.9',
+    description: 'AI工具安装服务限时特惠，Claude Code、Codex、OpenClaw仅需¥19.9/个',
+    url: 'https://ai.cccode.com.cn/pricing',
+  },
+};
 
 const tools = [
   { name: 'Claude Code', icon: '🤖', originalPrice: '49' },

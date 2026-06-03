@@ -87,7 +87,7 @@ export default function ContactPage() {
                 <p className="text-sm text-gray-500 mb-4">打开闲鱼APP扫描二维码，直接咨询下单</p>
                 <div className="inline-block bg-gray-50 p-4 rounded-lg">
                   <Image
-                    src="/images/xianyu-qrcode.png"
+                    src="/images/xianyu-qrcode.jpeg"
                     alt="闲鱼二维码"
                     width={200}
                     height={200}

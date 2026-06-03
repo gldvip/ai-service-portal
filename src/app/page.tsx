@@ -1,4 +1,36 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'AI工具安装服务 - Claude Code/Codex/OpenClaw专业安装 | 限时¥19.9',
+  description: '专业AI工具安装服务，提供Claude Code、Codex、OpenClaw(龙虾)等主流AI编程工具的安装与配置，10分钟快速上手，限时特惠¥19.9，截止6月底',
+  keywords: ['AI工具安装', 'Claude Code安装教程', 'Codex安装', 'OpenClaw龙虾', 'AI编程助手', '代码生成工具', 'AI软件配置服务'],
+  openGraph: {
+    title: 'AI工具安装服务 - Claude Code/Codex/OpenClaw专业安装',
+    description: '专业AI工具安装服务，10分钟快速上手AI编程，限时特惠¥19.9',
+    url: 'https://ai.cccode.com.cn',
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'AI工具安装服务',
+  description: '专业AI工具安装与配置服务，支持Claude Code、Codex、OpenClaw等主流AI编程工具',
+  url: 'https://ai.cccode.com.cn',
+  provider: {
+    '@type': 'Organization',
+    name: 'AI工具安装服务',
+  },
+  areaServed: 'CN',
+  serviceType: 'AI工具安装配置',
+  offers: {
+    '@type': 'Offer',
+    price: '19.9',
+    priceCurrency: 'CNY',
+    availability: 'https://schema.org/InStock',
+  },
+};
 
 const features = [
   {
@@ -39,6 +71,10 @@ const steps = [
 export default function Home() {
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-blue-50 to-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,7 +113,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20">
+      <section className="py-20" aria-label="服务优势">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">为什么选择我们</h2>
@@ -99,7 +135,7 @@ export default function Home() {
       </section>
 
       {/* Tools Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50" aria-label="支持的AI工具">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">支持的AI工具</h2>
@@ -133,7 +169,7 @@ export default function Home() {
       </section>
 
       {/* Process Section */}
-      <section className="py-20">
+      <section className="py-20" aria-label="服务流程">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">服务流程</h2>
