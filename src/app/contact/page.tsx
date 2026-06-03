@@ -1,27 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-
-const contactMethods = [
-  {
-    icon: '🐟',
-    title: '闲鱼咨询',
-    value: '搜索店铺：AI工具安装服务',
-    description: '闲鱼搜索店铺名，直接咨询下单',
-  },
-  {
-    icon: '💬',
-    title: '闲鱼私信',
-    value: '私信联系客服',
-    description: '在闲鱼APP内私信沟通需求',
-  },
-  {
-    icon: '⏰',
-    title: '工作时间',
-    value: '9:00 - 22:00',
-    description: '全年无休，随时响应',
-  },
-];
+import Image from 'next/image';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -99,20 +79,42 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Info */}
           <div>
-            <div className="space-y-6 mb-8">
-              {contactMethods.map((method) => (
-                <div
-                  key={method.title}
-                  className="flex items-start gap-4 p-4 bg-white rounded-xl border border-gray-100"
-                >
-                  <div className="text-3xl">{method.icon}</div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">{method.title}</h3>
-                    <p className="text-blue-600 font-medium">{method.value}</p>
-                    <p className="text-sm text-gray-500 mt-1">{method.description}</p>
-                  </div>
+            {/* 闲鱼二维码 */}
+            <div className="bg-white rounded-xl border border-gray-100 p-6 mb-6">
+              <div className="text-center">
+                <div className="text-4xl mb-3">🐟</div>
+                <h3 className="font-semibold text-gray-900 text-lg mb-2">闲鱼扫码咨询</h3>
+                <p className="text-sm text-gray-500 mb-4">打开闲鱼APP扫描二维码，直接咨询下单</p>
+                <div className="inline-block bg-gray-50 p-4 rounded-lg">
+                  <Image
+                    src="/images/xianyu-qrcode.png"
+                    alt="闲鱼二维码"
+                    width={200}
+                    height={200}
+                    className="mx-auto"
+                  />
                 </div>
-              ))}
+                <p className="text-xs text-gray-400 mt-3">或在闲鱼搜索「AI工具安装服务」</p>
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-8">
+              <div className="flex items-start gap-4 p-4 bg-white rounded-xl border border-gray-100">
+                <div className="text-3xl">⏰</div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">工作时间</h3>
+                  <p className="text-blue-600 font-medium">9:00 - 22:00</p>
+                  <p className="text-sm text-gray-500 mt-1">全年无休，随时响应</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4 p-4 bg-white rounded-xl border border-gray-100">
+                <div className="text-3xl">💰</div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">支付方式</h3>
+                  <p className="text-blue-600 font-medium">闲鱼平台交易</p>
+                  <p className="text-sm text-gray-500 mt-1">安装验收后再确认收货，资金有保障</p>
+                </div>
+              </div>
             </div>
 
             <div className="bg-blue-50 rounded-xl p-6">
