@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ai-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-service-portal
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - EMAIL_USER=gldvip@qq.com
+      - EMAIL_PASS=abadeacqvpkebcbc
+      - RECEIVE_EMAIL=gldvip@qq.com
+    networks:
+      - ai-network
+
+networks:
+  ai-network:
+    driver: bridge
