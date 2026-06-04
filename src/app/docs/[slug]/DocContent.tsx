@@ -68,6 +68,25 @@ function markdownToHtml(md: string): string {
     return id;
   }
 
+  // ── 先提取代码块，用占位符保护，避免段落处理破坏内容 ──────
+  const codeBlocks: string[] = [];
+  html = html.replace(
+    /```(\w*)\n([\s\S]*?)```/g,
+    (_m, lang, code) => {
+      const escaped = escapeHtml(code.trim());
+      const encoded = escapeAttr(code.trim());
+      const block = `<div class="code-block group relative my-6">
+        <div class="code-toolbar absolute top-0 right-0 flex items-center gap-1.5 bg-gray-800 border-b border-l border-gray-700 text-gray-400 text-xs rounded-bl-xl rounded-tr-xl px-1 py-0.5">
+          <span class="font-mono select-none px-1.5 py-0.5">${lang || 'text'}</span>
+          <button class="copy-btn px-2.5 py-1 rounded-lg hover:bg-gray-700 hover:text-gray-200 transition-all cursor-pointer font-medium" data-code="${encoded}">复制</button>
+        </div>
+        <pre class="bg-gray-900 text-gray-100 rounded-xl p-5 pt-9 overflow-x-auto text-sm leading-relaxed border border-gray-800"><code class="font-mono">${escaped}</code></pre>
+      </div>`;
+      const placeholder = `<!--CB${codeBlocks.length}-->`;
+      codeBlocks.push(block);
+      return placeholder;
+    }
+  );
 
   // ── 一键安装卡片（:::quick-install ... :::）──────────────────
   html = html.replace(
@@ -82,7 +101,6 @@ function markdownToHtml(md: string): string {
         if (t.startsWith('title:')) {
           title = t.replace(/^title:\s*/, '');
         } else if (t.startsWith('- ')) {
-          // 格式: - macOS/Linux: `command`
           const match = t.match(/^- (.+?):\s*`(.+?)`$/);
           if (match) {
             items.push({ os: match[1], cmd: match[2] });
@@ -116,22 +134,6 @@ function markdownToHtml(md: string): string {
           </div>
         </div>
         <div class="qi-body">${rows}</div>
-      </div>`;
-    }
-  );
-
-  // ── 代码块（带复制按钮）─────────────────────────────────────
-  html = html.replace(
-    /```(\w*)\n([\s\S]*?)```/g,
-    (_m, lang, code) => {
-      const escaped = escapeHtml(code.trim());
-      const encoded = escapeAttr(code.trim());
-      return `<div class="code-block group relative my-6">
-        <div class="code-toolbar absolute top-0 right-0 flex items-center gap-1.5 bg-gray-800 border-b border-l border-gray-700 text-gray-400 text-xs rounded-bl-xl rounded-tr-xl px-1 py-0.5">
-          <span class="font-mono select-none px-1.5 py-0.5">${lang || 'text'}</span>
-          <button class="copy-btn px-2.5 py-1 rounded-lg hover:bg-gray-700 hover:text-gray-200 transition-all cursor-pointer font-medium" data-code="${encoded}">复制</button>
-        </div>
-        <pre class="bg-gray-900 text-gray-100 rounded-xl p-5 pt-9 overflow-x-auto text-sm leading-relaxed border border-gray-800"><code class="font-mono">${escaped}</code></pre>
       </div>`;
     }
   );
@@ -215,6 +217,9 @@ function markdownToHtml(md: string): string {
   html = `<p class="mb-4 leading-7">${html}</p>`;
   html = html.replace(/<p class="mb-4 leading-7"><\/p>/g, '');
   html = html.replace(/<p class="mb-4 leading-7"><br\/><\/p>/g, '');
+
+  // ── 最后：还原代码块占位符 ──────────────────────────────
+  html = html.replace(/<!--CB(\d+)-->/g, (_m, idx) => codeBlocks[parseInt(idx)]);
 
   return html;
 }
