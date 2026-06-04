@@ -17,15 +17,12 @@ export default function ContactPage() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    alert('点击成功！正在尝试复制...');
-
     // 方法1: 尝试 Clipboard API
     if (navigator.clipboard && navigator.clipboard.writeText) {
       try {
         await navigator.clipboard.writeText(xianyuLink);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
-        alert('复制成功！');
         return;
       } catch (e) {
         console.log('Clipboard API failed:', e);
@@ -47,7 +44,6 @@ export default function ContactPage() {
       if (success) {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
-        alert('复制成功（方法2）！');
         return;
       }
     } catch (e) {
@@ -55,7 +51,6 @@ export default function ContactPage() {
     }
 
     // 方法3: 显示文本让用户手动复制
-    alert('自动复制失败，请手动长按复制链接');
     prompt('请长按复制以下链接：', xianyuLink);
   };
 
@@ -175,7 +170,7 @@ export default function ContactPage() {
                     <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                     </svg>
-                    一键复制闲鱼链接 v2
+                    一键复制闲鱼链接
                   </>
                 )}
               </button>
