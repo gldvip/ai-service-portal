@@ -74,7 +74,7 @@ export async function POST(request: Request) {
                 </div>
                 <div class="info-item">
                   <div class="label">🛠️ 需要安装的工具</div>
-                  <div class="value">${tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}</div>
+                  <div class="value">${tools.map((tool: string) => `<span class="tool-tag">${tool}</span>`).join('')}</div>
                 </div>
               </div>
 
